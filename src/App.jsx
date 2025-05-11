@@ -1,7 +1,11 @@
 import React from "react";
 import { Layout, theme } from "antd";
+import { Routes, Route } from "react-router-dom"; // Import React Router components
 import Sidebar from "./component/sidebar"; // Import the Sidebar component
+import Transaction from "./pages/Transaction"; // Import the Transaction page
 import "./App.css";
+import { Budget } from "./pages/Budget";
+
 const { Header, Content, Footer } = Layout;
 
 const App = ({
@@ -23,7 +27,7 @@ const App = ({
         handleColorChange={handleColorChange}
       />
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+        {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
         <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{
@@ -33,11 +37,18 @@ const App = ({
               borderRadius: borderRadiusLG,
             }}
           >
-            content
+            <Routes>
+              <Route path="/overview" element={<Transaction />} />
+              <Route path="/transaction" element={<Transaction />} />
+              <Route path="/accounts" element={<Transaction />} />
+              <Route path="/budget" element={<Budget />} />
+              <Route path="/investment" element={<Transaction />} />
+              <Route path="/" element={<div>Welcome to the Dashboard!</div>} />
+            </Routes>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          JCreation ©{new Date().getFullYear()} Created by JCreationZ
         </Footer>
       </Layout>
     </Layout>
