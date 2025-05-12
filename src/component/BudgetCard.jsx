@@ -5,8 +5,9 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 
 const BudgetCard = ({ title, spend, budget, onEdit, onDelete }) => {
-  // Calculate percentage for the progress bar, capping at 100%
+  // Calculate percentage for the progress bar, capping at 100% and format to 1 decimal
   const percent = budget > 0 ? Math.min((spend / budget) * 100, 100) : 0;
+  const percentDisplay = percent.toFixed(1);
   const remaining = budget - spend;
   const { token } = theme.useToken();
   const primaryColor = token.colorPrimary;
@@ -44,9 +45,10 @@ const BudgetCard = ({ title, spend, budget, onEdit, onDelete }) => {
 
       {/* Progress bar showing how much of the budget is spent */}
       <Progress
-        percent={percent}
+        percent={Number(percentDisplay)}
+        format={() => `${percentDisplay}%`}
         status={percent >= 100 ? "exception" : "active"}
-        strokeColor={primaryColor} // Use the primary color for the progress bar
+        strokeColor={primaryColor}
       />
 
       {/* Remaining Balance at the bottom */}

@@ -3,58 +3,16 @@ import { List, Typography, Button, Tag, Switch, Space } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { AddTransactionForm } from "../component/forms/add-transaction-form.";
 import { EditTransactionForm } from "../component/forms/EditTransactionForm";
-
-const initialTransactions = [
-  {
-    type: "Rent Payment",
-    date: "Mar 31, 08:00 PM",
-    merchant: "ABC Properties",
-    amount: "$1200.00",
-    category: "Housing",
-  },
-  {
-    type: "Salary Deposit",
-    date: "Apr 1, 08:00 PM",
-    merchant: "XYZ Corp",
-    amount: "+$4350.00",
-    category: "Income",
-  },
-  {
-    type: "Grocery Shopping",
-    date: "Apr 2, 08:00 PM",
-    merchant: "Whole Foods",
-    amount: "$85.75",
-    category: "Food",
-    tags: ["online", "shopping"],
-  },
-  {
-    type: "Coffee Shop",
-    date: "Apr 3, 08:00 PM",
-    merchant: "Starbucks",
-    amount: "$4.50",
-    category: "Dining",
-    tags: ["online", "shopping"],
-  },
-  {
-    type: "Online Purchase",
-    date: "Apr 4, 08:00 PM",
-    merchant: "Amazon",
-    amount: "$49.99",
-    category: "Shopping",
-    tags: ["online", "shopping"],
-  },
-  {
-    type: "Online Purchase",
-    date: "Apr 4, 08:00 PM",
-    merchant: "Amazon",
-    amount: "$49.99",
-    category: "Shopping",
-    tags: ["online", "shopping"],
-  },
-];
+import { useTransactionStore } from "../store/transactionStore";
 
 const Transactions = () => {
-  const [transactions, setTransactions] = useState(initialTransactions);
+  const transactions = useTransactionStore((state) => state.transactions);
+  const editTransaction = useTransactionStore((state) => state.editTransaction);
+  const deleteTransaction = useTransactionStore(
+    (state) => state.deleteTransaction
+  );
+  // For addTransaction, you can use in AddTransactionForm
+
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -81,15 +39,13 @@ const Transactions = () => {
   };
 
   const handleEditSave = (updated) => {
-    setTransactions((prev) =>
-      prev.map((item, idx) => (idx === editIndex ? updated : item))
-    );
+    editTransaction(editIndex, updated);
     setEditModalOpen(false);
     setEditIndex(null);
   };
 
   const handleDelete = () => {
-    setTransactions((prev) => prev.filter((_, idx) => idx !== editIndex));
+    deleteTransaction(editIndex);
     setEditModalOpen(false);
     setEditIndex(null);
   };
