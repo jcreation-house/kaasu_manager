@@ -320,7 +320,6 @@ export function AddTransactionForm() {
           <Divider />
 
           <Row gutter={[8, 8]} justify="end">
-            {" "}
             {/* Add gutter for spacing between buttons */}
             <Col xs={12} sm="auto">
               <Button
