@@ -45,13 +45,20 @@ const TRANSFER_CATEGORIES = [
   { label: "Savings", value: "Savings" },
   { label: "Debt Payment", value: "Debt Payment" },
 ];
+const MOCK_ACCOUNTS = [
+  { id: "acc1", name: "HSBC Checking" },
+  { id: "acc2", name: "TD Savings" },
+  { id: "acc3", name: "Visa Credit Card" },
+  { id: "acc4", name: "Wealthsimple Invest" },
+  { id: "acc5", name: "PayPal Balance" },
+];
 
 // --- Determine which category list to use ---
 
 export function AddTransactionForm() {
   const [open, setOpen] = useState(false);
   const [transactionType, setTransactionType] = useState("expense");
-  const [accounts, setAccounts] = useState([]);
+  // const [accounts, setAccounts] = useState([MOCK_ACCOUNTS]);
 
   const [form] = Form.useForm();
   const screens = useBreakpoint();
@@ -177,7 +184,7 @@ export function AddTransactionForm() {
                     rules={[{ required: true }]}
                   >
                     <Select placeholder="Select account">
-                      {accounts.map((account) => (
+                      {MOCK_ACCOUNTS.map((account) => (
                         <Option key={account.id} value={account.id}>
                           {account.name}
                         </Option>
@@ -227,7 +234,7 @@ export function AddTransactionForm() {
                     rules={[{ required: true }]}
                   >
                     <Select placeholder="Select account">
-                      {accounts.map((account) => (
+                      {MOCK_ACCOUNTS.map((account) => (
                         <Option key={account.id} value={account.id}>
                           {account.name}
                         </Option>
@@ -247,7 +254,7 @@ export function AddTransactionForm() {
                     rules={[{ required: true }]}
                   >
                     <Select placeholder="Select account">
-                      {accounts.map((account) => (
+                      {MOCK_ACCOUNTS.map((account) => (
                         <Option key={account.id} value={account.id}>
                           {account.name}
                         </Option>
@@ -262,7 +269,7 @@ export function AddTransactionForm() {
                     rules={[{ required: true }]}
                   >
                     <Select placeholder="Select account">
-                      {accounts.map((account) => (
+                      {MOCK_ACCOUNTS.map((account) => (
                         <Option key={account.id} value={account.id}>
                           {account.name}
                         </Option>
