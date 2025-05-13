@@ -4,13 +4,18 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
-const BudgetCard = ({ title, spend, budget, onEdit, onDelete }) => {
-  // Calculate percentage for the progress bar, capping at 100% and format to 1 decimal
-  const percent = budget > 0 ? Math.min((spend / budget) * 100, 100) : 0;
+const BudgetCard = ({ type, title, spend, budget, onEdit, onDelete }) => {
+  const percent = budget > 0 ? (spend / budget) * 100 : 0;
   const percentDisplay = percent.toFixed(1);
   const remaining = budget - spend;
   const { token } = theme.useToken();
   const primaryColor = token.colorPrimary;
+
+  // For income: green if 100% or more, else default
+  // For expense: red if 100% or more, else default
+  let percentColor = undefined;
+  if (type === "income" && percent >= 100) percentColor = "green";
+  if (type === "expense" && percent >= 100) percentColor = "red";
 
   return (
     <Card
@@ -31,7 +36,7 @@ const BudgetCard = ({ title, spend, budget, onEdit, onDelete }) => {
       }
       style={{ width: "100%", margin: "20px auto" }}
     >
-      {/* Card Content: Spend and Budget */}
+      {/* Card Content: Earned/Spend and Budget */}
       <div
         style={{
           display: "flex",
@@ -39,21 +44,34 @@ const BudgetCard = ({ title, spend, budget, onEdit, onDelete }) => {
           marginBottom: 16,
         }}
       >
-        <Text strong>Spend: {spend}</Text>
+        <Text strong>
+          {type === "income" ? "Earned" : "Spend"}: {spend}
+        </Text>
         <Text strong>Budget: {budget}</Text>
       </div>
 
-      {/* Progress bar showing how much of the budget is spent */}
+      {/* Progress bar showing how much of the budget is spent/earned */}
       <Progress
         percent={Number(percentDisplay)}
-        format={() => `${percentDisplay}%`}
-        status={percent >= 100 ? "exception" : "active"}
+        format={() => (
+          <span style={{ color: percentColor }}>{percentDisplay}%</span>
+        )}
+        status={
+          percent >= 100
+            ? type === "income"
+              ? "success"
+              : "exception"
+            : "active"
+        }
         strokeColor={primaryColor}
       />
 
       {/* Remaining Balance at the bottom */}
       <div style={{ textAlign: "center", marginTop: 16 }}>
-        <Text>Remaining Balance: {remaining}</Text>
+        <Text>
+          {type === "income" ? "Remaining to Earn" : "Remaining Balance"}:{" "}
+          {remaining}
+        </Text>
       </div>
     </Card>
   );
