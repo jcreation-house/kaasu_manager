@@ -3,6 +3,7 @@ import { Row, Col, Tabs, DatePicker, Button, message, Space } from "antd";
 import BudgetCard from "../component/BudgetCard";
 import { useBudgetStore } from "../store/budgetStore";
 import dayjs from "dayjs";
+import ButtonGroup from "antd/es/button/button-group";
 
 export const Budget = () => {
   const budgets = useBudgetStore((state) => state.budgets);
@@ -118,7 +119,10 @@ export const Budget = () => {
           }}
           allowClear
         />
-        <Button onClick={handleCopyPrevious}>Copy From Selected Month</Button>
+        <ButtonGroup>
+          <Button onClick={handleCopyPrevious}>Copy From Selected Month</Button>
+          <Button onClick={() => alert("Still working on it ")}>+</Button>
+        </ButtonGroup>
       </Space>
       <Tabs defaultActiveKey="income" items={tabItems} />
     </div>
